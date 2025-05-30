@@ -1,39 +1,73 @@
-# Spark JupyterLab Docker Setup
+# Practice: Comparison of Pandas and Spark
 
-This setup provides a Docker environment with Apache Spark (Master + Worker) and JupyterLab integration.
+This repository contains a practice project comparing the **pandas** and **Spark** libraries using a dataset of Steam reviews. The goal is to analyze how both tools perform when processing large volumes of data.
 
-## Prerequisites
+## Dataset
+
+The following dataset was used: [Steam Reviews Dataset (Kaggle)](https://www.kaggle.com/datasets/forgemaster/steam-reviews-dataset)
+
+## Objective
+
+Compare the performance and ease of use of pandas and Spark for:
+
+- Data reading and loading.
+- Data cleaning and preprocessing.
+- Basic data analysis.
+- Visualization of results.
+
+## Docker Environment with Spark and JupyterLab
+
+To facilitate the practice, a Docker-based environment was used, which includes:
+
+- Apache Spark (Master + Worker)
+- JupyterLab
+
+### Prerequisites
+
 - Docker
 - Docker Compose
 
-## Setup Instructions
+### Installation Instructions
 
-1. Create project structure:
-   ```bash
-   mkdir spark-jupyter-docker
-   cd spark-jupyter-docker
-   mkdir workspace
-   ```
+1. Create the project structure:
+    ```bash
+    mkdir spark-jupyter-docker
+    cd spark-jupyter-docker
+    mkdir workspace
+    ```
 
-2. Place all the configuration files in the project root directory.
+2. Place the configuration files in the project’s root directory.
 
 3. Build and start the containers:
-   ```bash
-   docker-compose up --build
-   ```
+    ```bash
+    docker-compose up --build
+    ```
 
-4. Access the UIs:
-   - JupyterLab: http://localhost:8888 (token: token-uag)
-   - Spark Master UI: http://localhost:8080
-   - Spark Worker UI: http://localhost:8081
-   - Spark Application UI: http://localhost:4040 (when running a Spark job)
+4. Access the web UIs:
+    - JupyterLab: [http://localhost:8888](http://localhost:8888) (token: `token-uag`)
+    - Spark Master UI: [http://localhost:8080](http://localhost:8080)
+    - Spark Worker UI: [http://localhost:8081](http://localhost:8081)
+    - Spark Application UI (when a Spark job is running): [http://localhost:4040](http://localhost:4040)
 
-## Usage Example
+### Default Configuration
+
+- Spark Master UI: [http://localhost:8080](http://localhost:8080)
+- Spark Worker UI: [http://localhost:8081](http://localhost:8081)
+- Spark Application UI: [http://localhost:4040](http://localhost:4040)
+- Jupyter token: `token-uag`
+- The workspace directory is mounted at `/workspace` in the container.
+- Default Spark configuration:
+  - Driver Memory: 1GB
+  - Executor Memory: 1GB
+  - Worker Cores: 1
+  - Worker Memory: 1GB
+
+### Basic Usage of PySpark
 
 ```python
 from pyspark.sql import SparkSession
 
-# Initialize Spark session with cluster master
+# Initialize the Spark session
 spark = SparkSession.builder \
     .appName("SparkExample") \
     .master("spark://spark-master:7077") \
@@ -49,20 +83,8 @@ df = spark.createDataFrame(data, ["name", "age"])
 df.show()
 ```
 
-## Configuration
+## Executive Report
 
-- Spark Master UI: http://localhost:8080
-- Spark Worker UI: http://localhost:8081
-- Spark Application UI: http://localhost:4040
-- Jupyter token: token-uag
-- Workspace directory is mounted at `/workspace` in the container
-- Default Spark configuration:
-  - Driver Memory: 1GB
-  - Executor Memory: 1GB
-  - Worker Cores: 1
-  - Worker Memory: 1GB
+The executive report with the findings and comparisons between pandas and Spark can be found in this repository in PDF format.
 
-## Note
-This configuration uses:
-- Apache Spark 3.5.4 with Python 3 support (scala2.12-java11-python3-ubuntu)
-- JupyterLab instead of Jupyter Notebook for a more modern interface
+---
